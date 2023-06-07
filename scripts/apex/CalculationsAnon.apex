@@ -1,0 +1,11 @@
+newCar lexus =new newCar();
+lexus.startCar('SUV', 'LEXUS');
+lexus.accelerate(80);
+lexus.checkSpeed();
+lexus.breake(55);
+lexus.checkSpeed();
+lexus.accelerate(10);
+lexus.checkSpeed();
+lexus.breake(40);
+lexus.checkSpeed();
+lexus.stopCar();

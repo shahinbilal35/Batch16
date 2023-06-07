@@ -1,0 +1,10 @@
+string msg = RandomSayiClass.random(5);
+System.debug(msg);
+string msg2 = RandomSayiClass.random(2);
+System.debug(msg2);
+string msg3 = RandomSayiClass.random(3);
+System.debug(msg3);
+string msg4 = RandomSayiClass.random(9);
+System.debug(msg4);
+string msg5 = RandomSayiClass.random(0);
+System.debug(msg5);
