@@ -109,7 +109,3 @@ public class AccountTriggerHandler {
          Messaging.sendEmail(listEmailMsg);
     }
  }
- 
- 
- 
- 

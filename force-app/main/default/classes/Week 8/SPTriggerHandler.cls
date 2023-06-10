@@ -3,16 +3,29 @@ public class SPTriggerHandler {
     //parameter: List<SP> newly created salesforce project records.
         //If we are insert 50 project, we have to create corresponding 50 tickets. 1 for each Project.
     public static void createDefaultTicket(list<salesforce_project__c> spTriggerNew) {
-        //create list of ticket so create bulk records
-        List<Salesforce_Ticket__c> listST = new List<Salesforce_Ticket__c>();
+        try {
+            //create list of ticket so create bulk records
+            List<Salesforce_Ticket__c> listST = new List<Salesforce_Ticket__c>();
 
-        for (Salesforce_Project__c newSP : spTriggerNew) {
-            Salesforce_Ticket__c st = new Salesforce_Ticket__c();
-            st.Subject__c = 'Default ST';
-            st.Salesforce_Project__c = newSP.Id;//relationship field
-            listST.add(st);
+            //how to access hierarchy custom setting org level default value in apex?
+            DefaultTicketInfo__c dt = DefaultTicketInfo__c.getOrgDefaults();
+            system.debug('dt ==> ' + dt);
+
+            for (Salesforce_Project__c newSP : spTriggerNew) {
+                Salesforce_Ticket__c st = new Salesforce_Ticket__c();
+                //we should be able to update the default subject, description, and priority without changing code.
+                st.Subject__c = dt.subject__c;
+                st.Description__c = dt.description__c;
+                st.Priority__c = dt.priority__c;
+                st.Salesforce_Project__c = newSP.Id;//relationship field
+                listST.add(st);
+            }
+            insert listST;
+        } catch (Exception ex) {
+            for (Salesforce_Project__c newSP : spTriggerNew) {
+                newSP.addError('Default ticket creation failed. Contact YOUR administrator, NOT developer.');
+            }
         }
-        insert listST;
     }
 
     public static void validate1(list<salesforce_project__c> spTriggerNew, list<salesforce_project__c> spTriggerOld, Map<id, salesforce_project__c> spTriggerNewMap,Map<id, salesforce_project__c> spTriggerOldMap) {
@@ -47,14 +60,41 @@ public class SPTriggerHandler {
         }
 
     }
+
     @future
-    public static void updateDescFuture(set<id> SpIds) {
-        List<Salesforce_Project__c> SpList = [select id, description__c from Salesforce_Project__c where id in :SpIds];
-        for (Salesforce_Project__c sp : SpList) {
-            sp.Description__c = 'Updated from future';
-            
-        }
-        update SpList;
+    public static void updateDescFuture(set<id> spIds) {
+        //we want to update description for all the projects where id is spids
         
+        //fetch all records using soql
+        List<Salesforce_Project__c> listSP = [select id, description__c from Salesforce_Project__c where id in :spIds];
+        for (Salesforce_Project__c sp : listSP) {
+            sp.Description__c = 'Updated from future.';
+        }
+        update listSP;
+    }
+
+    public static void spCompleted(list<salesforce_project__c> spTriggerNew, list<salesforce_project__c> spTriggerOld, Map<id, salesforce_project__c> spTriggerNewMap,Map<id, salesforce_project__c> spTriggerOldMap) {
+        set<id> spIds = new set<id>();
+
+        for (Salesforce_Project__c eachSP : spTriggerNew) {
+            if (eachSP.Status__c != spTriggerOldMap.get(eachSP.id).Status__c
+            && eachSP.Status__c == 'Completed') {
+                spIds.add(eachSP.Id);
+            }
+        }
+        if(!spIds.isempty()){
+            //call future method.
+            updateTicketStatus(spIds);
+        }
+    }
+
+    @future
+    private static void updateTicketStatus(set<id> spIds) {
+        //get or fetch all tickets which are NOT completed for all these SPIDS
+        list<Salesforce_Ticket__c> allST = [select id, status__c from Salesforce_Ticket__c where status__c != 'Completed' and Salesforce_Project__c in :spIds];
+        for (Salesforce_Ticket__c st : allST) {
+            st.Status__c = 'Completed';
+        }
+        update allST;
     }
 }
