@@ -63,5 +63,13 @@ public class LoopDemo {
             }
         }
     }
-    
+    public void foorLoopExample(){
+        integer no =5;
+        integer fact =1;
+        for (Integer i = 1; i < no; i++) {
+            fact *= i;
+            
+        }
+        system.debug('Factorial of ' + no +' is: ' + fact);
+    }
  }

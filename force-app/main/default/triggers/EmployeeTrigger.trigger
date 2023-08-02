@@ -1,4 +1,5 @@
 trigger EmployeeTrigger on Employee__c (before insert, after insert, before update, after update) {
+   
         if (Trigger.isBefore) {
             if (Trigger.isInsert || Trigger.isUpdate) {
                 EmployeeTriggerHandler.checkDepartment(trigger.new);

@@ -5,10 +5,9 @@ public class Carrr {
     //we can use this as properties, 
     //we can assign values when we create instances.
     private string carNumber;
-    public string name;//public variables are accessible outsite of the class.
-                        //access means, get values, and we can set values.
-    public string color;
-    public integer mfgYear;
+    string name;
+    string color;
+    integer mfgYear;
     decimal price;
 
     public void details(){
@@ -20,7 +19,6 @@ public class Carrr {
         printCarAge();
     }
 
-    //no access modifier means private
     void printCarAge(){
         date todayDate = date.today();
         integer currentYear = todayDate.year();

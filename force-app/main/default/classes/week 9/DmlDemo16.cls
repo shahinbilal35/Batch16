@@ -111,6 +111,3 @@ public class DmlDemo16 {
         insert emp1;
     }
 }
-
-
-

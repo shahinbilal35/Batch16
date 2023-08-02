@@ -40,7 +40,7 @@ public class BankAccount {
         
     }
 
-    string welcomeMessage(){
+    public string welcomeMessage(){
         string w = 'Welcome, ' + accountNumber + ' to ' + bankName;
         return w;
     }
@@ -58,8 +58,5 @@ public class BankAccount {
         //we can call methods from here.
     }
 
-    public void deposit(decimal amount){
-        balance = balance + amount;
-        system.debug('new balance after deposit: ' + balance);
-    }
+   
 }

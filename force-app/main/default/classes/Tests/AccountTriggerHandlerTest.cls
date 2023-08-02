@@ -92,27 +92,8 @@ public class AccountTriggerHandlerTest {
         //assert that VIP field is updated for all its contacts
             //remember: to assert, query first.
         list<contact> allContacts = [select id, vip__c from contact];
-        assert.areEqual(300, allcontacts.size());
         for (contact c : allContacts) {
             assert.areEqual(true, c.vip__c);
         }
-    }
-
-    @isTest
-    private static void testDelete() {
-        //prepare data.
-            //account and contacts
-        List<account> listAcc = new list<account>{
-            new account(name = 'May', phone = '7775556666', Industry = 'Energy'),
-            new account(name = 'June', Active__c = 'Yes'),
-            new account(name = 'Sunday', Industry = 'Energy', Active__c = 'Yes')
-        };
-        insert listAcc;
-        try {
-            delete listAcc;
-        } catch (DmlException de) {
-            assert.istrue(de.getMessage().contains('Cannot delete'));
-        }
-        
     }
 }

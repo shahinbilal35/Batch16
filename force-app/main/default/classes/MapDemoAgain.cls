@@ -89,23 +89,4 @@ public class MapDemoAgain {
             system.debug('roll No is ' + rollNo + ', studnet name is ' + s11);
         }
     }
-
-    public static void printMap5(){
-        list<string> l1 = new list<string>{'Alex','Benjamin'};
-        list<string> l2 = new list<string>{'John', 'Jane'};
-        list<string> l3 = new list<string>{'David', 'Peter'};
-
-
-        //map of department -> all members in it
-        map<string, list<string>> map99 = new map<string, list<string>>();
-
-        map99.put('IT', l1);
-        map99.put('Sales', l2);
-        map99.put('Service', l3);
-
-        system.debug(map99);
-    }
 }
-
-
-

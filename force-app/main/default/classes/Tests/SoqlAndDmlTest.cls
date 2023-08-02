@@ -42,6 +42,3 @@ public class SoqlAndDmlTest {
         assert.isTrue(conList.size()>0);
     }
 }
-
-
-

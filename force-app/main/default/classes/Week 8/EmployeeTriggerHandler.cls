@@ -4,30 +4,39 @@ public class EmployeeTriggerHandler {
             if (eachEmp.Department__c == null) {
                 eachEmp.Department__c.addError('Department can not be empty');
                 
-            } 
+            }
+            
         } 
     }
     public static void countEmployee(list<Employee__c> triggernew) {
         set<id> depIds = new set<id>();
         for (employee__c eachEmp : triggernew) {
             if (eachEmp.Department__c !=null) {
-                depIds.add(eachEmp.Department__c);     
-            }  
+                depIds.add(eachEmp.Department__c);
+                
+            }
+            
         }
         list<department__c> depLst =[select id, name__c, employee_count__c, (select id from employees__r) from Department__c where id in :depIds];
         for (department__c eachDep : depLst) {
-            eachDep.employee_count__c = eachDep.Employees__r.size();  
+            eachDep.employee_count__c = eachDep.Employees__r.size();
+            
         }
         update depLst;
+         
     }
     public static void deleteInActive(list<Employee__c> triggernew) {
         set<id> inActiveIds = new set<id>();
         for (Employee__c EachDeleteEmp : triggernew) {
             if (EachDeleteEmp.isActive__c ==false) {
                 inActiveIds.add(EachDeleteEmp.id);
-            } 
+                
+            }
+
+            
         }
-        delete[select id from Employee__c where id in :inActiveIds];  
+        delete[select id from Employee__c where id in :inActiveIds];
+            
     }
 
 
@@ -55,6 +64,3 @@ public class EmployeeTriggerHandler {
 //         }
 //     }
 }
-
-
-

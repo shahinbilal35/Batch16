@@ -1,10 +1,10 @@
 trigger ContactTrigger on Contact (before insert, after insert, before update, after update, before delete, after delete, after undelete) {
 
-        if (Trigger.isBefore && Trigger.isUpdate) {
-            //call handler method to validate contact update
-            ContactTriggerHandler.validate1(trigger.new, trigger.old, trigger.newMap, trigger.oldMap);
-            ContactTriggerHandler.validate2(trigger.new, trigger.old, trigger.newMap, trigger.oldMap);
-        }
+        // if (Trigger.isBefore && Trigger.isUpdate) {
+        //     //call handler method to validate contact update
+        //     ContactTriggerHandler.validate1(trigger.new, trigger.old, trigger.newMap, trigger.oldMap);
+        //     ContactTriggerHandler.validate2(trigger.new, trigger.old, trigger.newMap, trigger.oldMap);
+        // }
     
     
     
@@ -72,4 +72,3 @@ trigger ContactTrigger on Contact (before insert, after insert, before update, a
     //         system.debug('contact After update trigger');
     //     }
     // }
-

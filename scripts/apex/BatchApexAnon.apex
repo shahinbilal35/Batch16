@@ -14,5 +14,4 @@ for (account acc : accList) {
 }
 update accList;
 
-BatchClassMail bcm = new BatchClassMail();
-Database.executeBatch(bcm, 4);
+`

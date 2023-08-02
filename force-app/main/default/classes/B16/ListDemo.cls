@@ -26,29 +26,13 @@ public class ListDemo {
          system.debug('after : ' + listC);
  
          string returnValue = '';
-         integer size = listC.size(); //5, max index => 4 => size - 1
+         integer size = listC.size(); //5, max index => 4
          if(i >= 0 && i < size){
              returnValue = listC.get(i);
          } else {
              returnValue = 'No such value';
          }
          return returnValue;
-    }
- 
-    public static boolean candidateList(string str){
-         List<string> listC = new list<string>();
-         system.debug('before : ' + listC);
- 
-         //add values or elements or items in list
-         listC.add('Marc');  //0
-         listC.add('Steve'); //1
-         listC.add('Kunal'); //2
-         listC.add('Marc');  //3
-         listC.add('Marc');  //4
-         system.debug('after : ' + listC);
-         //contains is case sensitive for string
-         boolean check = listC.contains(str);
-         return check;
     }
  
     public static void randomIntList(){
